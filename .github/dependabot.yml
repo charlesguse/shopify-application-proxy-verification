@@ -1,0 +1,37 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+# Examples: https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/controlling-dependencies-updated
+
+version: 2
+updates:
+  # Lower risk updates, which are probably fine to automerge
+  - package-ecosystem: "npm" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "daily"
+    groups:
+      minor-updates-or-whatever:
+        update-types:
+          - minor
+          - patch
+    labels:
+      - dependabot-automerge # TODO: create this label in the repo & update auto-approve workflow to check if the label is present on the PR
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+  # Higher risk updates, which you may not even want, so don't automerge them
+  - package-ecosystem: "npm" # See documentation for possible values
+    branch: master
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "weekly"
+    groups:
+      major-updates:
+        update-types:
+          - minor
+          - patch
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-minor", "version-update:semver-patch"]
